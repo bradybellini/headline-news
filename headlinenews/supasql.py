@@ -9,7 +9,7 @@ class SupaPSQL:
         load_dotenv()
         self.url: str = os.environ.get("SUPABASE_URL")
         self.key: str = os.environ.get("SUPABASE_KEY")
-        self.insert_table: str = "articles_duplicate"
+        self.insert_table: str = "articles_staging"
         self.select_table: str = "feeds"
 
     def _create_client(self) -> Client:
