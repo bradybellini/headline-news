@@ -10,19 +10,19 @@ class RSSParser:
         pass
 
     def _get_article_info(self, feed_id: str, article: dict) -> dict:
-        summary = getattr(article, "summary", "None")
-        date = time.strftime("%Y-%m-%d %H:%M:%S", article["published_parsed"])
-        if summary != "None":
-            summary = clean_html(html.fromstring(summary)).text_content().strip()
+        summary = getattr(article, "summary", None)
+        date = getattr(article, "published", None)
+        guidislink = getattr(article, "guidislink", False)
+        guid = getattr(article, "guid", None)
 
         return {
             "feed_id": feed_id,
             "title": article.title,
             "link": article.link,
             "author": getattr(article, "author", "No Authors Listed"),
-            "published": date,
-            "summary": summary,
-            "guid": article.link if article.guidislink else article.guid,
+            "published": time.strftime("%Y-%m-%d %H:%M:%S", article["published_parsed"]) if date else None,
+            "summary": clean_html(html.fromstring(summary)).text_content().strip() if summary else summary,
+            "guid": article.link if guidislink else guid,
             "uid": hashlib.md5(str(article.title + article.link).encode()).hexdigest(),
         }
 
