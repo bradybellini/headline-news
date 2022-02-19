@@ -11,8 +11,7 @@ class RSSParser:
 
     def _get_article_info(self, feed_id: str, article: dict) -> dict:
         summary = getattr(article, "summary", "None")
-        date = time.strftime('%Y-%m-%d %H:%M:%S', article["published_parsed"])
-        print(date)
+        date = time.strftime("%Y-%m-%d %H:%M:%S", article["published_parsed"])
         if summary != "None":
             summary = clean_html(html.fromstring(summary)).text_content().strip()
 
@@ -21,7 +20,7 @@ class RSSParser:
             "title": article.title,
             "link": article.link,
             "author": getattr(article, "author", "No Authors Listed"),
-            "published": article.published,
+            "published": date,
             "summary": summary,
             "guid": article.link if article.guidislink else article.guid,
             "uid": hashlib.md5(str(article.title + article.link).encode()).hexdigest(),
