@@ -33,5 +33,5 @@ class SupaPSQL:
     def run(self) -> None:
         feeds = self._select()
         for i in range(len(feeds[0])):
-            print(feeds[0][i]["feed_url"])
+            # print(feeds[0][i]["feed_url"])
             self._insert(feeds[0][i]["feed_url"], feeds[0][i]["id"])
