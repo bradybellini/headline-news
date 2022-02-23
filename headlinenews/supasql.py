@@ -1,7 +1,9 @@
 import os
+from typing import Any
 from dotenv import load_dotenv
 from supabase import create_client, Client
 from headlinenews import RSSParser
+from postgrest_py import exceptions
 
 
 class SupaPSQL:
@@ -16,7 +18,7 @@ class SupaPSQL:
         supabase: Client = create_client(self.url, self.key)
         return supabase
 
-    def _select(self) -> list:
+    def _select(self) -> Any:
         supabase: Client = self._create_client()
         select = supabase.table(self.select_table).select("feed_url", "id").execute()
         return select
@@ -26,13 +28,16 @@ class SupaPSQL:
         r = RSSParser()
         articles = r.articles(feed, feed_id)
         for i in range(len(articles)):
-            supabase.table(self.insert_table).upsert(
-                articles[i],
-            ).execute()
+            try:
+                supabase.table(self.insert_table).upsert(
+                    articles[i],
+                ).execute()
+            except exceptions.APIError as e:
+                print(e)
 
     def run(self) -> None:
         feeds = self._select()
-        print(feeds[0])
-        for i in range(len(feeds[0])):
-            # print(feeds[0][i]["feed_url"])
-            self._insert(feeds[0][i]["feed_url"], feeds[0][i]["id"])
+        # print(range(len(feeds.data)))
+        for i in range(len(feeds.data)):
+            print(feeds.data[i]["feed_url"])
+            self._insert(feeds.data[i]["feed_url"], feeds.data[i]["id"])
