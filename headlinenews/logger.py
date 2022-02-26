@@ -4,11 +4,10 @@ import logging.handlers
 rogger = logging.getLogger("rogger_logger")
 rogger.setLevel(logging.DEBUG)
 
-fh = logging.handlers.TimedRotatingFileHandler(
+fh = logging.handlers.RotatingFileHandler(
     filename="logs/warning/headlinenews.log",
-    when="midnight",
-    utc=True,
-    backupCount=14,
+    maxBytes=10000000,
+    backupCount=3,
     encoding="utf-8",
 )
 fh.setLevel(logging.WARNING)
@@ -16,20 +15,18 @@ fh.setLevel(logging.WARNING)
 ch = logging.StreamHandler()
 ch.setLevel(logging.ERROR)
 
-nfo = logging.handlers.TimedRotatingFileHandler(
+nfo = logging.handlers.RotatingFileHandler(
     filename="logs/info/headlinenews_info.log",
-    when="midnight",
-    utc=True,
-    backupCount=7,
+    maxBytes=10000000,
+    backupCount=3,
     encoding="utf-8",
 )
 nfo.setLevel(logging.INFO)
 
-dbug = logging.handlers.TimedRotatingFileHandler(
+dbug = logging.handlers.RotatingFileHandler(
     filename="logs/debug/headlinenews_debug.log",
-    when="midnight",
-    utc=True,
-    backupCount=3,
+    maxBytes=50000000,
+    backupCount=4,
     encoding="utf-8",
 )
 dbug.setLevel(logging.DEBUG)
