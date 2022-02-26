@@ -5,7 +5,7 @@ rogger = logging.getLogger("rogger_logger")
 rogger.setLevel(logging.DEBUG)
 
 fh = logging.handlers.RotatingFileHandler(
-    filename="logs/warning/headlinenews.log",
+    filename="headline-news/logs/warning/headlinenews.log",
     maxBytes=10000000,
     backupCount=3,
     encoding="utf-8",
@@ -16,7 +16,7 @@ ch = logging.StreamHandler()
 ch.setLevel(logging.ERROR)
 
 nfo = logging.handlers.RotatingFileHandler(
-    filename="logs/info/headlinenews_info.log",
+    filename="headline-news/logs/info/headlinenews_info.log",
     maxBytes=10000000,
     backupCount=3,
     encoding="utf-8",
@@ -24,7 +24,7 @@ nfo = logging.handlers.RotatingFileHandler(
 nfo.setLevel(logging.INFO)
 
 dbug = logging.handlers.RotatingFileHandler(
-    filename="logs/debug/headlinenews_debug.log",
+    filename="headline-news/logs/debug/headlinenews_debug.log",
     maxBytes=50000000,
     backupCount=12,
     encoding="utf-8",
