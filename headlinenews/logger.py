@@ -26,7 +26,7 @@ nfo.setLevel(logging.INFO)
 dbug = logging.handlers.RotatingFileHandler(
     filename="logs/debug/headlinenews_debug.log",
     maxBytes=50000000,
-    backupCount=4,
+    backupCount=12,
     encoding="utf-8",
 )
 dbug.setLevel(logging.DEBUG)
