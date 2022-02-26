@@ -1,4 +1,9 @@
 from headlinenews import SupaPSQL
 
-supa = SupaPSQL()
-supa.run()
+
+def main():
+    supa = SupaPSQL()
+    supa.run()
+
+if __name__ == '__main__':
+    main()
