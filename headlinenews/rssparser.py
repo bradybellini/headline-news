@@ -11,21 +11,17 @@ class RSSParser:
         self.logger.info("Creating an instance of RSSParser")
 
     def _get_article_info(self, feed_id: str, article: dict) -> dict:
-        # _title = getattr(article, "title", None)
-        # _link = getattr(article, "link", None)
-        # _date = getattr(article, "published", None)
-        # if not _title or not _link or not _date:
-        #     self.logger.warning(
-        #         f"No Title, Link or Published in feed {feed_id} and article {article}"
-        #     )
-        #     self.logger.debug(
-        #         f"Feed: {feed_id} Article: {article} Title: {_title} Link: {_link} Date: {_date}"
-        #     )
-        #     return
         summary = getattr(article, "summary", None)
         date = getattr(article, "published", None)
         guidislink = getattr(article, "guidislink", False)
         guid = getattr(article, "guid", None)
+        tags = getattr(article, "tags", None)
+        tag_list = []
+        if tags:
+            for i in range(len(tags)):
+                tag_list.append(tags[i]['term'])
+        else:
+            tag_list = None
         self.logger.debug(f"Getting article info from {feed_id} {article}")
         data = {
             "feed_id": feed_id,
@@ -40,6 +36,7 @@ class RSSParser:
             else summary,
             "guid": article.link if guidislink else guid,
             "uid": hashlib.md5(str(article.title + article.link).encode()).hexdigest(),
+            "tags": tag_list
         }
         self.logger.debug(f"data {data}")
         return data
