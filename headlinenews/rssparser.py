@@ -61,3 +61,5 @@ class RSSParser:
         self.logger.info(f"Parsed content")
         articles = [parsed for parsed in parsed.entries]
         return [self._get_article_info(feed_id, entry) for entry in articles]
+        # for i in range(len(articles)):
+        #     return self._get_article_info(feed_id, articles[i])
